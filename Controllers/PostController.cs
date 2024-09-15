@@ -136,5 +136,8 @@ public class PostController : ControllerBase
             @"SELECT [PostId], [UserId], [PostTitle], [PostContent], [PostCreated], [PostUpdated]
                        FROM TutorialAppSchema.Posts
                        WHERE [PostTitle] LIKE '%@SearchParam%' OR [PostContent] LIKE '%@SearchParam%'";
+        IEnumerable<Post> posts = _dapper.LoadData<Post>(sql, new { SearchParam = searchParam });
+
+        return posts;
     }
 }
