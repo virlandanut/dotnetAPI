@@ -1,0 +1,103 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/danutvirlan/Downloads/DotNetAPICourse-main/3-APIBasics/1-DotnetAPI_Start/DotnetAPI.csproj": {}
+  },
+  "projects": {
+    "/Users/danutvirlan/Downloads/DotNetAPICourse-main/3-APIBasics/1-DotnetAPI_Start/DotnetAPI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/danutvirlan/Downloads/DotNetAPICourse-main/3-APIBasics/1-DotnetAPI_Start/DotnetAPI.csproj",
+        "projectName": "DotnetAPI",
+        "projectPath": "/Users/danutvirlan/Downloads/DotNetAPICourse-main/3-APIBasics/1-DotnetAPI_Start/DotnetAPI.csproj",
+        "packagesPath": "/Users/danutvirlan/.nuget/packages/",
+        "outputPath": "/Users/danutvirlan/Downloads/DotNetAPICourse-main/3-APIBasics/1-DotnetAPI_Start/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/danutvirlan/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[5.2.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            },
+            "automapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "dapper": {
+              "target": "Package",
+              "version": "[2.1.35, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
