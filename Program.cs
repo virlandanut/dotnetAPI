@@ -12,41 +12,50 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("DevCors", (corsBuilder) =>
-    {
-        corsBuilder.WithOrigins("http://localhost:4200", "http://localhost:3000", "http://localhost:8000")
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
-    });
-    options.AddPolicy("ProdCors", (corsBuilder) =>
-    {
-        corsBuilder.WithOrigins("https://myProductionSite.com")
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
-    });
+    options.AddPolicy(
+        "DevCors",
+        (corsBuilder) =>
+        {
+            corsBuilder
+                .WithOrigins(
+                    "http://localhost:4200",
+                    "http://localhost:3000",
+                    "http://localhost:8000"
+                )
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+        }
+    );
+    options.AddPolicy(
+        "ProdCors",
+        (corsBuilder) =>
+        {
+            corsBuilder
+                .WithOrigins("https://myProductionSite.com")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+        }
+    );
 });
-
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 string? tokenKeyString = builder.Configuration.GetSection("Appsettings:TokenKey").Value;
 
-SymmetricSecurityKey tokenKey = new(
-            Encoding.UTF8.GetBytes(
-                tokenKeyString != null ? tokenKeyString : ""
-            )
-    );
+SymmetricSecurityKey tokenKey =
+    new(Encoding.UTF8.GetBytes(tokenKeyString != null ? tokenKeyString : ""));
 
-TokenValidationParameters tokenValidationParameters = new()
-{
-    IssuerSigningKey = tokenKey,
-    ValidateIssuer = false,
-    ValidateIssuerSigningKey = false,
-    ValidateAudience = false
-};
+TokenValidationParameters tokenValidationParameters =
+    new()
+    {
+        IssuerSigningKey = tokenKey,
+        ValidateIssuer = false,
+        ValidateIssuerSigningKey = false,
+        ValidateAudience = false,
+    };
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder
+    .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = tokenValidationParameters;
@@ -73,4 +82,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-

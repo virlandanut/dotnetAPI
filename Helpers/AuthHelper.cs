@@ -1,7 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using DotnetAPI.Data;
+using DotnetAPI.Dtos;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DotnetAPI.Helpers;
@@ -9,10 +13,12 @@ namespace DotnetAPI.Helpers;
 public class AuthHelper
 {
     private readonly IConfiguration _config;
+    private readonly DataContextDapper _dapper;
 
     public AuthHelper(IConfiguration config)
     {
         _config = config;
+        _dapper = new DataContextDapper(config);
     }
 
     public byte[] GetPasswordHash(string password, byte[] passwordSalt)
@@ -56,5 +62,30 @@ public class AuthHelper
         SecurityToken securityToken = tokenHandler.CreateToken(descriptor);
 
         return tokenHandler.WriteToken(securityToken);
+    }
+
+    public bool ResetPasswordRequest(UserForLoginDto userForSetPassword)
+    {
+        byte[] passwordSalt = new byte[128 / 8];
+        using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+        {
+            rng.GetNonZeroBytes(passwordSalt);
+        }
+
+        byte[] passwordHash = GetPasswordHash(userForSetPassword.Password, passwordSalt);
+
+        string sqlAddAuth =
+            @"EXEC TutorialAppSchema.spRegistration_Upsert 
+                    @Email = @emailParam, @PasswordHash = @passwordHashParam, @PasswordSalt = @passwordSaltParam";
+
+        return _dapper.ExecuteSql(
+            sqlAddAuth,
+            new
+            {
+                emailParam = userForSetPassword.Email,
+                passwordHashParam = passwordHash,
+                passwordSaltParam = passwordSalt,
+            }
+        );
     }
 }
